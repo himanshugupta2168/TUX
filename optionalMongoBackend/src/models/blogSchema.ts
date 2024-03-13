@@ -19,6 +19,8 @@ const BlogSchema = new mongoose.Schema<createBlogInputType>({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
     }
+},{
+    timestamps:true,
 })
 
 export default mongoose.model("Blog", BlogSchema);

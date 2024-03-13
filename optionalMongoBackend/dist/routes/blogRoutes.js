@@ -21,7 +21,7 @@ router.get("/bulk", authMiddleware_1.Authenticate, (req, res) => __awaiter(void 
     try {
         const blogs = yield blogSchema_1.default.find({
             published: true,
-        }).populate("authorId", "-password");
+        }).populate("authorId", "-password").sort({ createdAt: -1 });
         return res.status(200).json({
             success: true,
             message: "Blogs fetched Successfully",

@@ -9,7 +9,7 @@ router.get("/bulk", Authenticate, async (req: Request, res: Response) => {
     try {
         const blogs = await Blog.find({
             published: true,
-        }).populate("authorId", "-password");
+        }).populate("authorId", "-password").sort({createdAt:-1});
 
         return res.status(200).json({
             success: true,
