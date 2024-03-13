@@ -29,6 +29,7 @@ router.post("/signup", async (req: Request, res: Response) => {
             success: true,
             message: "User created successfully",
             token: `Bearer_${token}`,
+            name:user.name
         });
     } catch (error:any) {
         console.error("Error during signup:", error);
@@ -64,6 +65,7 @@ router.post("/signin", async (req: Request, res: Response) => {
             success: true,
             message: "User logged in successfully",
             token: `Bearer_${token}`,
+            name:user.name
         });
     } catch (error:any) {
         console.error("Error during signin:", error);

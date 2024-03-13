@@ -36,6 +36,7 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
             success: true,
             message: "User created successfully",
             token: `Bearer_${token}`,
+            name: user.name
         });
     }
     catch (error) {
@@ -64,6 +65,7 @@ router.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function*
             success: true,
             message: "User logged in successfully",
             token: `Bearer_${token}`,
+            name: user.name
         });
     }
     catch (error) {

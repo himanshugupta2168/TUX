@@ -23,7 +23,9 @@ function createBlog() {
         }
         
         else{
-          toast.error("Error while publishing blog")
+          toast.error("Error while publishing blog",{
+            position:"top-center"
+          })
         }
       }
       catch(e:any){

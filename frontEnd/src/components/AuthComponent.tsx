@@ -19,21 +19,25 @@ function AuthComponent({ type }: {type:"signup"|"signin"}) {
   async function authenticate(){
     try{
       const url= `${import.meta.env.VITE_URL}auth/${type}`
-      console.log(url);
+      // console.log(url);
       let response = await axios.post(url, postInputs);
       const data = response.data;
 
       if (data && data.success==true){
         localStorage.setItem("authorization", data.token);
         setValue(data.name);
-        toast.success(`${type} successful`)
+        toast.success(`${type} successful`,{
+          position:"top-center"
+        })
         navigate(`/blogs`)
       }else{
         throw new Error("unable to login ");
       }
     }
     catch(e){
-      toast.error("Invalid Credentials")
+      toast.error("Invalid Credentials", {
+        position:"top-center"
+      })
       navigate(`/${type}`)
     }
   }

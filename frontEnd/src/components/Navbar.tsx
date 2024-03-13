@@ -13,6 +13,7 @@ function Navbar({text,url}:navBar) {
     function handleChange(){
       navigate(`${url}`)
     }
+    console.log(user);
 
 
 
@@ -22,7 +23,7 @@ function Navbar({text,url}:navBar) {
           <div className="flex items-baseline gap-4">
               {url && <button className="bg-green-600 text-white px-4 py-1 rounded-2xl hover:bg-green-700 duration-200" onClick={handleChange}>{text}</button>}
               <div className="">
-                {localStorage.getItem('authorization')&&<p className="w-[30px] h-[30px] bg-slate-600 rounded-full text-white text-center text-[20px] cursor-pointer" onClick={()=>{setLogoutVisible(!logoutVisible)}}>{user.substring(0,1)|| 'A'}</p>}
+                {localStorage.getItem('authorization')&&<p className="w-[30px] h-[30px] bg-slate-600 rounded-full text-white text-center text-[20px] cursor-pointer" onClick={()=>{setLogoutVisible(!logoutVisible)}}>{user.split("")[0]  || 'A'}</p>}
                 {logoutVisible && localStorage.getItem('authorization')&&<h3 className="absolute mt-4 border border-slate-500 py-2 px-4 right-6 top-8 rounded-md cursor-pointer" onClick={()=>{
                   localStorage.removeItem('authorization');
                   navigate("/");

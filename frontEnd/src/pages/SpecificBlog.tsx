@@ -7,7 +7,6 @@ function SpecificBlog() {
   const {loading, blog}= useBlog({
     id:id ||"",
   });
-
   if (loading)return(<>
     <div className="flex justify-center items-center h-screen">
       <div className="rounded-full h-20 w-20 bg-slate-400 animate-ping"></div>
@@ -18,7 +17,7 @@ function SpecificBlog() {
 
     <div>
       <Navbar text={"Create"} url ={"/new"}/>
-      <FullBlog id={blog?.id||""} title={blog?.title||""} content={blog?.content||""} publishedDate={blog?.publishedDate||""} author={blog?.author.name||""}/>
+      <FullBlog id={blog?._id||""} title={blog?.title||""} content={blog?.content||""} publishedDate={blog?.publishedDate||""} author={blog?.authorId.name||""}/>
     </div>
   )
 }
