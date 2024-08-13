@@ -70,7 +70,13 @@ router.post("/publish", authMiddleware_1.Authenticate, (req, res) => __awaiter(v
         if (!success) {
             throw new Error("Invalid Data type");
         }
-        const response = yield blogSchema_1.default.create(req.body);
+        let title = req.body.title;
+        let content = req.body.content;
+        const response = yield blogSchema_1.default.create({
+            title: title,
+            content: content,
+            authorId: req.body.authorId,
+        });
         if (!response) {
             throw new Error("Error in publishing blog");
         }

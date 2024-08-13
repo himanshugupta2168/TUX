@@ -6,7 +6,9 @@
   "dependencies": {
     "@prisma/client": "^5.10.2",
     "@prisma/extension-accelerate": "^1.0.0",
+    "cloudinary": "^2.3.0",
     "cohort-medium-common": "^1.0.2",
+    "dotenv": "^16.4.5",
     "hono": "^4.0.9",
     "prisma": "^5.10.2"
   },

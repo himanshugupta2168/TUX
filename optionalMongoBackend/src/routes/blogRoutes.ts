@@ -62,8 +62,13 @@ router.post("/publish", Authenticate, async (req: Request, res: Response) => {
         if (!success) {
             throw new Error("Invalid Data type");
         }
-
-        const response = await Blog.create(req.body);
+       let title = req.body.title;
+       let content = req.body.content;
+       const response= await Blog.create({
+        title:title, 
+        content:content,
+        authorId:req.body.authorId,
+       })
 
         if (!response) {
             throw new Error("Error in publishing blog");

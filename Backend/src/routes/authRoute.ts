@@ -19,6 +19,7 @@ authRouter.post('/signup', async (c) => {
     }).$extends(withAccelerate())
     const body = await c.req.json()
     // zod and hash remaining
+    // console.log(body);
     try{
       const {success}= signUpInput.safeParse(body);
       if (!success){
@@ -44,7 +45,7 @@ authRouter.post('/signup', async (c) => {
       c.status(411)
       return c.json({
         success:false,
-        message:"U  nable to create User at the moment",
+        message:"Unable to create User at the moment",
         error :e.message
       })
     }
@@ -56,6 +57,7 @@ authRouter.post('/signup', async (c) => {
     }).$extends(withAccelerate())
     const body = await c.req.json()
     // zod and hash remaining
+    console.log(body);
     try{
       const{success}= signInInput.safeParse(body);
       if (!success){
@@ -80,6 +82,7 @@ authRouter.post('/signup', async (c) => {
      }) 
     }
     catch(e:any){
+      console.log(e.message);
       c.status(411)
       return c.json({
         success:false,

@@ -6,7 +6,7 @@ interface Blog{
     title:string,
     content:string,
     publishedDate:string,
-    authorId:{
+    author:{
       name:string,
     }
   
