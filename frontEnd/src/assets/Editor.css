@@ -1,0 +1,62 @@
+/* styles.css */
+#editorjs {
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+#editorjs .ce-toolbar__plus {
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
+    color: #e2e8f0; /* Light color for visibility against dark backgrounds */
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+  
+  #editorjs .ce-toolbar__plus:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Lighter on hover */
+  }
+  
+  #editorjs .ce-inline-toolbar {
+    background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+  }
+  
+  #editorjs .ce-inline-toolbar__button {
+    color: #e2e8f0; /* Text color for toolbar buttons */
+  }
+  
+  #editorjs .ce-inline-toolbar__button--active {
+    background-color: rgba(255, 255, 255, 0.2); /* Active button background */
+    color: #e2e8f0; /* Active button text color */
+  }
+  
+  #editorjs .ce-inline-toolbar__button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Hover background color */
+    color: #e2e8f0; /* Hover text color */
+  }
+  
+  /* Customize the block quote */
+  #editorjs .ce-blockquote {
+    color: #e2e8f0; /* Light text color for visibility */
+    border-left: 4px solid #4a5568; /* Border to distinguish quotes */
+    padding-left: 1em;
+  }
+  
+  /* Styling the header tool */
+  #editorjs .ce-header {
+    color: #e2e8f0; /* Light text color */
+  }
+  
+  /* Tailwind CSS Styles */
+
+.btn-tool {
+  @apply px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600;
+}
+
+.editor-container {
+  @apply flex flex-col items-start w-full p-4 bg-neutral-950;
+}
+
+#editorjs {
+  @apply text-white w-full border rounded-lg p-4;
+}

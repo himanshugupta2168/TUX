@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, useNavigate}from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, Link}from "react-router-dom";
 import BlogsBullk from "./pages/BlogsBullk";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
@@ -9,11 +9,14 @@ import { ToastContainer } from "react-toastify";
 import {authState} from "./store/atoms/auth"
 import { useEffect } from "react";
 import CreateBlog from "./pages/CreateBlog";
+import { Landing } from "./components/Landing";
+import Overview from "./components/Overview";
+import Footer from "./components/Footer";
 function App() {
 
   return (
 
-    <div>
+    <div className="">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<AppDislay/>}/>
@@ -39,12 +42,24 @@ function AppDislay(){
       navigate("/blogs")
     }
     else{
-      navigate("/signin")
+      navigate("/")
     }
   },[])
   return(
-    <div>
-
+    <div className="w-full min-h-screen relative">
+      <div className="fixed z-30 w-full bg-transparent backdrop-blur-sm  text-white  h-16 top-0 left-0 px-20 flex items-center justify-between">
+          <Link to={"/"} className="text-3xl font-black text-violet-800 flex-1"> Dastaan</Link>
+          <div className="md:flex gap-12 hidden">
+            <Link to={"/"}><button className="px-8 py-2 h-full hover:text-slate-500 duration-200">Home</button></Link>
+            <Link to={"/signin"}><button className="px-8 py-2 h-full hover:text-slate-500 duration-200">Login</button></Link>
+            <Link to={"/signup"}><button className="px-8 py-2 h-full text-white bg-violet-800 rounded-lg hover:bg-white hover:text-black duration-200">SignUp</button></Link>
+          </div>
+      </div>
+      <div>
+        <Landing/>
+        <Overview/>
+        <Footer/>
+      </div>
     </div>
   )
 }

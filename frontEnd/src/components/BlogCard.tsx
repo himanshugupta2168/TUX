@@ -1,31 +1,100 @@
-import { useNavigate } from "react-router-dom"
-interface BlogCardDetails{
-    authorName:string,
-    title:string, 
-    content:string,
-    publishedDate?:string,
-    id:string
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiThumbsUp } from "react-icons/fi";
+import { IoMdPaper } from "react-icons/io";
+
+interface BlogCardDetails {
+  authorName: string;
+  title: string;
+  content: string;
+  publishedDate?: string;
+  id: string;
 }
-function BlogCard({authorName , title , content , publishedDate , id}:BlogCardDetails) {
+function BlogCard({
+  authorName,
+  title,
+  content,
+  publishedDate,
+  id,
+}: BlogCardDetails) {
   const navigate = useNavigate();
-  const handleClick = ()=>{
-    navigate(`/blogs/${id}`)
-  }
+  const handleClick = () => {
+    navigate(`/blogs/${id}`);
+  };
+
+  const monthMap = useMemo(() => {
+    const months = new Map([
+      [1, "January"],
+      [2, "February"],
+      [3, "March"],
+      [4, "April"],
+      [5, "May"],
+      [6, "June"],
+      [7, "July"],
+      [8, "August"],
+      [9, "September"],
+      [10, "October"],
+      [11, "November"],
+      [12, "December"],
+    ]);
+    return months;
+  }, []);
+  const dateString = publishedDate?.split("T")[0];
+  const date = dateString ? new Date(dateString) : null;
+  const month =
+    date && monthMap.get((date?.getMonth() + 1) % 12)?.substring(0, 3);
+  const year = date?.getFullYear();
+  const pDate = date?.getDate();
   return (
-    <div className="mx-auto w-[90%] md:w-[70%] border-b-2 py-4 px-4">
-        <div className="flex  items-baseline gap-2">
-            <div className="w-[40px] h-[40px] bg-slate-600 text-white rounded-full text-center text-[24px]">{authorName.substring(0,1)|| "Anonymous"}</div>
-            <p className="lg:text-[18px] font-semibold">{authorName}</p>.<p className="text-xs">{publishedDate?.split('T')[0]}</p>
+    <div
+      className="mx-auto w-[90%] md:w-[70%]  py-4 px-4 my-4 rounded-md text-white border border-gray-700 "
+    >
+      <div className="flex gap-4 items-center">
+        <div className="w-[40px] h-[40px] bg-slate-600 text-white rounded-full text-center text-[24px]">
+          {authorName.substring(0, 1) || "Anonymous"}
         </div>
-        <div className="mt-4 group cursor-pointer" onClick={handleClick}>
-            <h3 className="text-[15px] font-semibold font-serif md:text-[17px] lg:text-[20px]">{title}</h3>
-            {content.length>200
-            ?(<div>{content.substring(0,140)} <span className="text-blue-500 group-hover:text-blue-700 cursor-pointer">   ...read more </span></div>)
-            :(<div>{content}</div>)}
+        <div>
+          <p className="lg:text-[18px] font-semibold">{authorName}</p>
+          <p className="text-sm text-gray-500">
+            {month} {pDate}, {year}
+          </p>
         </div>
-        <p className="pt-2 italic text-slate-500 text-sm">{Math.ceil(content.length/150)} minute(s) read </p>
+      </div>
+      <div className="mt-4 px-4  group cursor-pointer" onClick={handleClick}>
+        <div className="flex">
+          <div className="w-3/4 h-full">
+            <h3 className="text-[15px] font-semibold font-serif md:text-[17px] lg:text-[20px]">
+              {title}
+            </h3>
+            {content.length > 200 ? (
+              <div>
+                {content.substring(0, 140)}{" "}
+                <span className="text-blue-500 group-hover:text-blue-700 cursor-pointer">
+                  {" "}
+                  ...read more{" "}
+                </span>
+              </div>
+            ) : (
+              <div>{content}</div>
+            )}
+          </div>
+          <div className="w-1/4 h-full">
+            <img src="/EditorDemo.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <div className=" flex gap-8 px-4 py-4 items-center">
+        <div className="flex items-center gap-2">
+          <FiThumbsUp />
+          <p>0 likes</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <IoMdPaper />
+          <p>{Math.floor(content.length/60)+1} minute(s) read</p>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
 export default BlogCard;

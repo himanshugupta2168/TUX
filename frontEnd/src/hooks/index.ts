@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify";
 interface Blog{
-    id:string,
+    _id:string,
     title:string,
     content:string,
     publishedDate:string,

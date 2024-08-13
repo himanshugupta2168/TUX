@@ -19,21 +19,25 @@ function AuthComponent({ type }: {type:"signup"|"signin"}) {
   async function authenticate(){
     try{
       const url= `${import.meta.env.VITE_URL}auth/${type}`
-      console.log(url);
+      // console.log(url);
       let response = await axios.post(url, postInputs);
       const data = response.data;
 
       if (data && data.success==true){
         localStorage.setItem("authorization", data.token);
         setValue(data.name);
-        toast.success(`${type} successful`)
+        toast.success(`${type} successful`,{
+          position:"top-center"
+        })
         navigate(`/blogs`)
       }else{
         throw new Error("unable to login ");
       }
     }
     catch(e){
-      toast.error("Invalid Credentials")
+      toast.error("Invalid Credentials", {
+        position:"top-center"
+      })
       navigate(`/${type}`)
     }
   }
@@ -97,16 +101,14 @@ function AuthComponent({ type }: {type:"signup"|"signin"}) {
                     }}/>
                 </div>
           </div>
-          <button onClick={authenticate} className=" bg-black w-1/2 text-white mt-4 h-12 rounded-md text-lg hover:opacity-85">{type==="signin"?"Login":"Signup"}</button>
+          <button onClick={authenticate} className=" bg-gradient-to-r from-violet-900 to-neutral-950 w-1/2 text-white mt-4 h-12 rounded-md text-lg hover:bg-gradient-to-r hover:from-neutral-900 hover:to-violet-900">{type==="signin"?"Login":"Signup"}</button>
         </div>
-        <div className="hidden lg:block bg-[#f3f4f6]">
+        <div className="hidden lg:block bg-gradient-to-br from-purple-950 to-neutral-950 rounded-md text-white">
           <div className="w-4/5 flex flex-col justify-center mx-auto h-full">
-            <h1 className="text-[30px] font-bold">
-              " The customer service i recieved was exceptional. The support
-              team went above and beyond to address my concerns."
+            <h1 className="text-[28px] font-bold">
+              {type==="signup"?"Ready to Share Your Story?":"We missed you. Ready to Continue Your Story?"}
             </h1>
-            <p className="mt-4 text-xl font-semibold">Jules Winnfeild</p>
-            <p className="text-slate-400 font-semibold">CEO, Acme Inc</p>
+            <p className="mt-4 text-gray-400">{type==="signup"?"Become a part of our vibrant community of writers and readers. Start posting your story today!.":"Keep writing, sharing, and connecting with our community. Your story awaits."}</p>
           </div>
         </div>
       </div>

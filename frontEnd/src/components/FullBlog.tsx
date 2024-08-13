@@ -8,7 +8,6 @@ interface fullBlog{
 }
 
 function FullBlog({id, title, content,publishedDate, author}:fullBlog) {
-    console.log(id , title, content, publishedDate, author);
   return (
     <div className="w-[90%] lg:w-[80%] grid grid-rows-2 md:grid-cols-12 mx-auto mt-8 ">
         <div className="md:col-span-8" >

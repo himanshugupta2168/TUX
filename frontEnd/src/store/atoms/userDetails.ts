@@ -4,5 +4,5 @@ interface userDetails{
 }
 export const userDetails= atom({
     key:"userDetails",
-    default:""
+    default:"Anonymous"
 })
