@@ -19,7 +19,7 @@ function AuthComponent({ type }: {type:"signup"|"signin"}) {
   async function authenticate(){
     try{
       const url= `${import.meta.env.VITE_URL}auth/${type}`
-      console.log(url);
+      // console.log(url);
       let response = await axios.post(url, postInputs);
       const data = response.data;
 
