@@ -7,7 +7,7 @@ interface navBar{
   text?:string, 
   url?:string,
 }
-function Navbar({text,url}:navBar) {
+function Navbar({url}:navBar) {
     const user = useRecoilValue(userDetails);
     const [logoutVisible, setLogoutVisible]= useState(false)
     const navigate= useNavigate();

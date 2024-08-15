@@ -18,6 +18,7 @@ function BlogsBullk() {
         <div className="w-full pt-16 pb-10 min-h-screen">
           {
             blogs.length>0?(
+              // @ts-ignore
               blogs.map((blog, index)=>(<BlogCard key={index} title={blog.title} content={blog.content} publishedDate={blog.publishedDate}  authorName={blog.author.name} id={blog.id}/>))
             ):(
               <div className="text-4xl">
