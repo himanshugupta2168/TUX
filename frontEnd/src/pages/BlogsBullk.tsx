@@ -6,14 +6,17 @@ import Loader from "../components/ui/Loader";
 import { useBlogs } from "../hooks"
 import { authState } from "../store/atoms/auth";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 function BlogsBullk() {
   const {loading,blogs}= useBlogs();
   // console.log(blogs); 
   const navigate = useNavigate()
   const auth:any = useRecoilValue(authState)
-  if (!auth){
-    navigate("/")
-  }
+  useEffect(()=>{
+    if (!auth()){
+      navigate("/")
+    }
+  }, [])
   if (loading)return (
     <div className="w-full h-screen flex justify-center items-center bg-neutral-950">
       <Loader/>

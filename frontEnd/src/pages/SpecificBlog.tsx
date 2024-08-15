@@ -5,6 +5,7 @@ import FullBlog from "../components/FullBlog";
 import Loader from "../components/ui/Loader";
 import { useRecoilValue } from "recoil";
 import { authState } from "../store/atoms/auth";
+import { useEffect } from "react";
 function SpecificBlog() {
   let {id} = useParams();
   const {loading, blog}= useBlog({
@@ -12,9 +13,11 @@ function SpecificBlog() {
   });
   const navigate = useNavigate();
   const auth= useRecoilValue(authState);
-  if (!auth){
-    navigate("/");
-  }
+  useEffect(()=>{
+    if (!auth()){
+      navigate("/")
+    }
+  }, [])
   // console.log(blog);
   if (loading)return(<>
     <div className="flex justify-center items-center h-screen bg-neutral-950">

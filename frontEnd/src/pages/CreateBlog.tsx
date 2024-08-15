@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState , useEffect} from "react"
 import Navbar from "../components/Navbar"
 import { createBlogInputType } from "cohort-medium-common"
 import axios from "axios"
@@ -42,9 +42,11 @@ function createBlog() {
       published:true,
     })
     const auth = useRecoilValue(authState)
-    if (!auth){
-      navigate("/");
-    }
+    useEffect(()=>{
+      if (!auth()){
+        navigate("/")
+      }
+    }, [])
     // console.log(data);
   return (
     <div className="pt-12 min-h-screen bg-neutral-950">
