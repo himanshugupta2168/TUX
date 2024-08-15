@@ -21,7 +21,6 @@ function BlogCard({
   const handleClick = () => {
     navigate(`/blogs/${id}`);
   };
-
   const monthMap = useMemo(() => {
     const months = new Map([
       [1, "January"],
@@ -46,9 +45,7 @@ function BlogCard({
   const year = date?.getFullYear();
   const pDate = date?.getDate();
   return (
-    <div
-      className="mx-auto w-[90%] md:w-[70%]  py-4 px-4 my-4 rounded-md text-white border border-gray-700 "
-    >
+    <div className="mx-auto w-[90%] md:w-[70%]  py-4 px-4 my-4 rounded-md text-white border border-gray-700 ">
       <div className="flex gap-4 items-center">
         <div className="w-[40px] h-[40px] bg-slate-600 text-white rounded-full text-center text-[24px]">
           {authorName.substring(0, 1) || "Anonymous"}
@@ -60,29 +57,24 @@ function BlogCard({
           </p>
         </div>
       </div>
+
+      {/* content */}
       <div className="mt-4 px-4  group cursor-pointer" onClick={handleClick}>
-        <div className="flex">
-          <div className="w-3/4 h-full">
-            <h3 className="text-[15px] font-semibold font-serif md:text-[17px] lg:text-[20px]">
+        <div className="flex flex-col-reverse md:flex-row w-full">
+          <div className="w-full md:w-3/4 h-full">
+            <h3 className="text-[20px] font-semibold font-serif md:text-[22px] lg:text-[20px]">
               {title}
             </h3>
-            {content.length > 200 ? (
-              <div>
-                {content.substring(0, 140)}{" "}
-                <span className="text-blue-500 group-hover:text-blue-700 cursor-pointer">
-                  {" "}
-                  ...read more{" "}
-                </span>
-              </div>
-            ) : (
-              <div>{content}</div>
-            )}
           </div>
-          <div className="w-1/4 h-full">
-            <img src="/EditorDemo.png" alt="" />
+          <div className="w-full md:w-2/3 lg:w-1/2">
+            <img src="/EditorDemo.png" alt=""  />
           </div>
         </div>
       </div>
+
+      
+
+      {/* likes and shares  */}
       <div className=" flex gap-8 px-4 py-4 items-center">
         <div className="flex items-center gap-2">
           <FiThumbsUp />
@@ -90,7 +82,7 @@ function BlogCard({
         </div>
         <div className="flex items-center gap-2">
           <IoMdPaper />
-          <p>{Math.floor(content.length/60)+1} minute(s) read</p>
+          <p>{Math.floor(Object.keys(content).length) + 1} minute(s) read</p>
         </div>
       </div>
     </div>

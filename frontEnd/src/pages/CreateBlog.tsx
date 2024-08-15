@@ -39,6 +39,7 @@ function createBlog() {
       content:"",
       published:true,
     })
+    // console.log(data);
   return (
     <div className="pt-12 min-h-screen bg-neutral-950">
          <Navbar/> 
@@ -47,7 +48,7 @@ function createBlog() {
               ...data,
               title:e.target.value,
             })}} value={data.title} required/>
-            <EditorComponent/>
+            <EditorComponent data={data} setData={setData}/>
             <button className="bg-green-600 px-4 py-2 rounded-3xl   text-white hover:bg-green-700 duration-200" onClick={handlePublish}> Publish </button>
         </div>  
         <Footer/>

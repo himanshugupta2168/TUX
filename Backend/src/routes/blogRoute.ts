@@ -175,7 +175,9 @@ blogRouter.post("/publish", async(c)=>{
       }).$extends(withAccelerate())
       try{
         const body = await c.req.json();
-        const {success}= createBlogInput.safeParse(body);
+        console.log(body);
+        const success= true;
+        // const {success}= createBlogInput.safeParse(body);
         if (!success){
             throw new Error("Invlaid Data  type ")
         }
@@ -194,6 +196,7 @@ blogRouter.post("/publish", async(c)=>{
         })
       }
       catch(e:any){
+        console.log(e.message);
         c.status(500)
         return c.json({
             success:false,

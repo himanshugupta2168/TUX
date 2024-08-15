@@ -20,7 +20,16 @@ import axios from "axios";
 import "./../assets/Editor.css"
 import EditorToolbar from "./CustomToolbar";
 
-const EditorComponent = () => {
+interface Props{
+  data:{
+    title:string, 
+    content:any ,
+    published?:boolean,
+  },
+  setData:any
+}
+
+const EditorComponent = ({data, setData}:Props) => {
   const editorInstance = useRef<EditorJS | null>(null);
 
   const initializeEditor = async () => {
@@ -122,7 +131,10 @@ const EditorComponent = () => {
       autofocus: true,
       onChange: async () => {
         const content = await editor.save();
-        console.log(content);
+        setData((prev:any)=>({
+          ...prev, 
+          content:content
+        }));
       },
     });
   };
