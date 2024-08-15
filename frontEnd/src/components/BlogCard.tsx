@@ -1,8 +1,11 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiThumbsUp } from "react-icons/fi";
 import { IoMdPaper } from "react-icons/io";
-
+import { IoMdShareAlt } from "react-icons/io";
+import { FacebookShare, WhatsappShare, TwitterShare, LinkedinShare} from "react-share-kit";
+import { FaRegCopy } from "react-icons/fa6";
+import { toast } from "react-toastify";
 interface BlogCardDetails {
   authorName: string;
   title: string;
@@ -44,8 +47,17 @@ function BlogCard({
     date && monthMap.get((date?.getMonth() + 1) % 12)?.substring(0, 3);
   const year = date?.getFullYear();
   const pDate = date?.getDate();
+  
+
+  // share functionality
+  const [shareVisible, setShareVisible]= useState(false);
+  const url = `${window.location.href}/${id}`
+  const handleShare=async()=>{
+    await window.navigator.clipboard.writeText(url);
+    toast.success("url copied Successfully")
+  }
   return (
-    <div className="mx-auto w-[90%] md:w-[70%]  py-4 px-4 my-4 rounded-md text-white border border-gray-700 ">
+    <div className="mx-auto w-[90%] md:w-[70%]  py-4 px-4 my-4 rounded-md text-white border border-gray-700 relative">
       <div className="flex gap-4 items-center">
         <div className="w-[40px] h-[40px] bg-slate-600 text-white rounded-full text-center text-[24px]">
           {authorName.substring(0, 1) || "Anonymous"}
@@ -75,16 +87,26 @@ function BlogCard({
       
 
       {/* likes and shares  */}
-      <div className=" flex gap-8 px-4 py-4 items-center">
+      <div className=" flex gap-4 md:gap-8 md:px-4 py-4 items-center justify-around md:justify-start">
         <div className="flex items-center gap-2">
           <FiThumbsUp />
-          <p>0 likes</p>
+          <p className="text-sm md:text-base">0 likes</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ">
           <IoMdPaper />
-          <p>{Math.floor(Object.keys(content).length) + 1} minute(s) read</p>
+          <p className="text-xs md:text-base">{Math.floor(Object.keys(content).length) + 1} minute(s) read</p>
         </div>
+        <IoMdShareAlt className="md:text-xl" onClick={()=>{setShareVisible(!shareVisible)}}/>
       </div>
+      {
+        shareVisible&&<div className="absolute bg-neutral-950  w-full lg:w-1/2  bottom-5 left-0 lg:left-1/2 flex  items-center gap-2 px-2">
+          <FaRegCopy className="rounded-full bg-gray-500 w-12 h-12 px-2 py-2 cursor-pointer" onClick={()=> handleShare()}/>
+          <FacebookShare url={url} quote={title} round={true} size={48} onClick={()=>setShareVisible(false)}/>
+          <WhatsappShare url={url} title={title} round={true} size={48} onClick={()=>setShareVisible(false)}/>
+          <TwitterShare url={url} title={title} round={true} size={48} onClick={()=>setShareVisible(false)}/>
+          <LinkedinShare url={url} round={true} size={48} onClick={()=>setShareVisible(false)}/>
+        </div>
+      }
     </div>
   );
 }
