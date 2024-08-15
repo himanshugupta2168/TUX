@@ -29,7 +29,7 @@ interface Props{
   setData:any
 }
 
-const EditorComponent = ({data, setData}:Props) => {
+const EditorComponent = ({ setData}:Props) => {
   const editorInstance = useRef<EditorJS | null>(null);
 
   const initializeEditor = async () => {

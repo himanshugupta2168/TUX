@@ -23,6 +23,7 @@ const customRenderers = {
     const rows = content
       .map((row, rowIndex: any) => {
         const cells = row
+        // @ts-ignore
           .map((cell: any) => `<td class="border px-4 py-2">${cell}</td>`)
           .join("");
         return withHeadings && rowIndex === 0
@@ -39,6 +40,7 @@ const customRenderers = {
     // Create list items with conditional classes
     const items = block.data.items
       .map(
+        //@ts-ignore
         (item) =>
           `<li class="${
             tag === "ul" ? "list-disc" : "list-decimal"
@@ -70,7 +72,7 @@ interface fullBlog {
 
 // main returned function
 
-function FullBlog({ id, title, content, publishedDate, author }: fullBlog) {
+function FullBlog({ title, content, publishedDate, author }: fullBlog) {
   const monthMap = useMemo(() => {
     const months = new Map([
       [1, "January"],
