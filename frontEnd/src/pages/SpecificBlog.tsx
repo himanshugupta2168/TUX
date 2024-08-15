@@ -1,14 +1,21 @@
 import Navbar from "../components/Navbar"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useBlog } from "../hooks"
 import FullBlog from "../components/FullBlog";
 import Loader from "../components/ui/Loader";
+import { useRecoilValue } from "recoil";
+import { authState } from "../store/atoms/auth";
 function SpecificBlog() {
   let {id} = useParams();
   const {loading, blog}= useBlog({
     id:id ||"",
   });
-  console.log(blog);
+  const navigate = useNavigate();
+  const auth= useRecoilValue(authState);
+  if (!auth){
+    navigate("/");
+  }
+  // console.log(blog);
   if (loading)return(<>
     <div className="flex justify-center items-center h-screen bg-neutral-950">
       <Loader/>

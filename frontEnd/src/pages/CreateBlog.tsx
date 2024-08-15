@@ -6,6 +6,8 @@ import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import EditorComponent from "../components/Editor"
 import Footer from "../components/Footer"
+import { useRecoilValue } from "recoil"
+import { authState } from "../store/atoms/auth"
 function createBlog() {
   const navigate = useNavigate();
     async function  handlePublish() {
@@ -39,6 +41,10 @@ function createBlog() {
       content:"",
       published:true,
     })
+    const auth = useRecoilValue(authState)
+    if (!auth){
+      navigate("/");
+    }
     // console.log(data);
   return (
     <div className="pt-12 min-h-screen bg-neutral-950">
