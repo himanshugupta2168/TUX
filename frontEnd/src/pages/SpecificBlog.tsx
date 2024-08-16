@@ -18,7 +18,6 @@ function SpecificBlog() {
       navigate("/")
     }
   }, [])
-  // console.log(blog);
   if (loading)return(<>
     <div className="flex justify-center items-center h-screen bg-neutral-950">
       <Loader/>

@@ -14,8 +14,7 @@ function Navbar({url}:navBar) {
     function handleChange(){
       navigate(`${url}`)
     }
-    console.log(user);
-
+    // console.log(user);
 
 
   return (

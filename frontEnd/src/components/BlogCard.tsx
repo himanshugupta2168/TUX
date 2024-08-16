@@ -100,7 +100,7 @@ function BlogCard({
       </div>
       {
         shareVisible&&<div className="absolute bg-neutral-950  w-full lg:w-1/2  bottom-5 left-0 lg:left-1/2 flex  items-center gap-2 px-2">
-          <FaRegCopy className="rounded-full bg-gray-500 w-12 h-12 px-2 py-2 cursor-pointer" onClick={()=> handleShare()}/>
+          <FaRegCopy className="rounded-full bg-gray-500 w-12 h-12 px-2 py-2 cursor-pointerd" onClick={()=> handleShare()}/>
           <FacebookShare url={url} quote={title} round={true} size={48} onClick={()=>setShareVisible(false)}/>
           <WhatsappShare url={url} title={title} round={true} size={48} onClick={()=>setShareVisible(false)}/>
           <TwitterShare url={url} title={title} round={true} size={48} onClick={()=>setShareVisible(false)}/>

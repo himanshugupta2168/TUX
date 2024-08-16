@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import BlogCard from "../components/BlogCard"
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar"
@@ -7,12 +7,31 @@ import { useBlogs } from "../hooks"
 import { authState } from "../store/atoms/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import axios from "axios";
+import { userDetails } from "../store/atoms/userDetails";
 function BlogsBullk() {
-  const {loading,blogs}= useBlogs();
-  // console.log(blogs); 
+  const fetchUser = async()=>{
+    try{
+      const response = await axios.post(`${import.meta.env.VITE_URL}auth`,{},{
+        headers:{
+          Authorization:localStorage.getItem('authorization')
+        }
+      })
+      setuer(response.data.user.name);
+    }
+    catch(e){
+      console.error(e);
+    }
+  }
+  const [user, setuer]= useRecoilState(userDetails)
+  const {loading,blogs}= useBlogs(); 
   const navigate = useNavigate()
   const auth:any = useRecoilValue(authState)
+
   useEffect(()=>{
+    if (user=="Anonymous"){
+      fetchUser();
+    }
     if (!auth()){
       navigate("/")
     }

@@ -4,7 +4,7 @@ import BlogsBullk from "./pages/BlogsBullk";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import SpecificBlog from "./pages/SpecificBlog";
-import {useRecoilValue } from "recoil";
+import {useRecoilState, useRecoilValue } from "recoil";
 import { ToastContainer } from "react-toastify";
 import {authState} from "./store/atoms/auth"
 import { useEffect } from "react";
@@ -12,6 +12,8 @@ import CreateBlog from "./pages/CreateBlog";
 import { Landing } from "./components/Landing";
 import Overview from "./components/Overview";
 import Footer from "./components/Footer";
+import { userDetails } from "./store/atoms/userDetails";
+import axios from "axios";
 function App() {
 
   return (
@@ -36,9 +38,24 @@ export default App;
 
 function AppDislay(){
   const presentAuthState = useRecoilValue(authState);
+  const [user, setUser]= useRecoilState(userDetails)
   const navigate = useNavigate();
+  const fetchUser = async()=>{
+    try{
+      const response = await axios.post(`${import.meta.env.VITE_URL}auth`,{},{
+        headers:{
+          Authorization:localStorage.getItem('authorization')
+        }
+      })
+      setUser(response.data.user.name)
+    }
+    catch(e){
+      console.error(e);
+    }
+  }
   useEffect(()=>{
     if (presentAuthState()){
+      fetchUser();
       navigate("/blogs")
     }
     else{
