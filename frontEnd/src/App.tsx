@@ -4,7 +4,7 @@ import BlogsBullk from "./pages/BlogsBullk";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import SpecificBlog from "./pages/SpecificBlog";
-import {useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ToastContainer } from "react-toastify";
 import {authState} from "./store/atoms/auth"
 import { useEffect } from "react";
@@ -38,7 +38,7 @@ export default App;
 
 function AppDislay(){
   const presentAuthState = useRecoilValue(authState);
-  const [user, setUser]= useRecoilState(userDetails)
+  const setUser= useSetRecoilState(userDetails)
   const navigate = useNavigate();
   const fetchUser = async()=>{
     try{
