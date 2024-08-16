@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import {  useEffect, useState } from "react"
 import { toast } from "react-toastify";
 interface Blog{
     _id:string,
@@ -11,6 +11,22 @@ interface Blog{
     }
   
   }
+
+
+  type UserProfileDetailsType = {
+    success:boolean,
+    user: {
+        location: string;
+        bio: string;
+        posts: { }[];
+        favouritedPosts: { }[];
+        id:string, 
+        name:string
+        createdAt:any,
+        updatedAt:any
+    }
+};
+
 
 export const useBlogs = ()=>{
     const [loading, setLoading]= useState(true);
@@ -25,7 +41,7 @@ export const useBlogs = ()=>{
             setBlogs(response.data.data)
             setLoading(false);
         })
-        .catch(()=>{toast.error("error in fetching blogs")})
+        .catch(()=>{toast.error("error in fetching blogs")}).finally(()=>{setLoading(false)})
     }, [])
     return {
         loading, blogs 
@@ -45,9 +61,25 @@ export const useBlog=({id}:{ id : string })=>{
             setBlog(response.data.data)
             setLoading(false);
         })
-        .catch(()=>{toast.error("error in fetching blogs")})
+        .catch(()=>{toast.error("error in fetching blogs")}).finally(()=>{setLoading(false)})
     }, [id])
     return {
         loading, blog
     }
+}
+
+
+
+export const FetchUserDetails=(id:string)=>{
+    const[loading, setLoading]= useState(true);
+    const [userProfileDetails, setUserProfileDetails]= useState<UserProfileDetailsType>();
+    useEffect(()=>{
+        axios.get(`${import.meta.env.VITE_URL}auth/${id}`)
+        .then((response)=>{
+            setLoading(false);
+            setUserProfileDetails(response.data)
+        })
+        .catch(()=>{toast.error("UNABLE to fetch user details")}).finally(()=>{setLoading(false)});
+    },[id])
+    return {loading, userProfileDetails}
 }

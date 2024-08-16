@@ -14,6 +14,7 @@ import Overview from "./components/Overview";
 import Footer from "./components/Footer";
 import { userDetails } from "./store/atoms/userDetails";
 import axios from "axios";
+import Profile from "./pages/Profile";
 function App() {
 
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/blogs/:id" element={<SpecificBlog/>}/>
             <Route path="/new" element={<CreateBlog/>}/>
+            <Route path="/profile/:id" element={<Profile/>}/>
           </Routes>
         </BrowserRouter>
         <ToastContainer/>
@@ -47,7 +49,8 @@ function AppDislay(){
           Authorization:localStorage.getItem('authorization')
         }
       })
-      setUser(response.data.user.name)
+      // console.log(response.data.user);
+      setUser(response.data.user);
     }
     catch(e){
       console.error(e);

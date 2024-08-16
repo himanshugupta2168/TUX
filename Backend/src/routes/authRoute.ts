@@ -37,6 +37,7 @@ authRouter.post("/signup", async (c) => {
       message: "User created Successfully",
       token: `Bearer_${token}`,
       name: user.name,
+      id:user.id
     });
   } catch (e: any) {
     c.status(411);
@@ -76,6 +77,7 @@ authRouter.post("/signin", async (c) => {
       message: "User Logged in  Successfully",
       token: `Bearer_${token}`,
       name: user.name,
+      id:user.id,
     });
   } catch (e: any) {
     console.log(e.message);
@@ -127,6 +129,7 @@ authRouter.post("/", async (c) => {
       },
       select:{
         name:true,
+        id:true,
       }
     })
     if (!user){
@@ -146,3 +149,92 @@ authRouter.post("/", async (c) => {
     })
   }
 });
+
+
+authRouter.get("/:id", async(c)=>{
+  const prisma = new PrismaClient({
+    datasourceUrl:c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+  try{
+    const id = await c.req.param('id')
+    const user = await prisma.user.findFirst({
+      where:{
+        id:id
+      },
+      select:{
+        id:true, 
+        name:true,
+        bio:true, 
+        location:true,
+        createdAt:true, 
+        updatedAt:true, 
+        favouritedPosts:{
+          select:{
+            title:true, 
+            thumbnail:true
+          }
+        },
+        posts:{
+          select:{
+            title:true,
+            thumbnail:true
+          },
+          take:2,
+          orderBy:{
+            publishedDate:"desc"
+          }
+        }
+      }
+    })
+    if (!user){
+      throw new Error("User not found");
+    }
+    c.status(200);
+    return c.json({
+      success:true,
+      user:user
+    })
+  }
+  catch(e:any){
+    c.status(404);
+    return c.json({
+      success:false,
+      error:e.message
+    })
+  }
+})
+
+
+
+authRouter.patch("/:id", async(c)=>{
+  const prisma = new PrismaClient({
+    datasourceUrl:c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+  try{
+    const data= await c.req.json();
+    const id = await c.req.param('id')
+    const updatedUser= await prisma.user.update({
+      where:{
+        id:id,
+      }, 
+      data:{
+        bio:data.bio,
+        location:data.location,
+      }
+    })
+    c.status(200);
+    return c.json({
+      sucess:true,
+      bio:updatedUser.bio,
+      location:updatedUser.location
+    })
+  }
+  catch(e:any){
+    c.status(500);
+    return c.json({
+      success:false,
+      error :e.message
+    })
+
+  }
+})

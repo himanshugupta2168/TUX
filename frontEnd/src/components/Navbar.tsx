@@ -13,8 +13,7 @@ function Navbar({url}:navBar) {
     const navigate= useNavigate();
     function handleChange(){
       navigate(`${url}`)
-    }
-    // console.log(user);
+    }   
 
 
   return (
@@ -26,8 +25,11 @@ function Navbar({url}:navBar) {
                <HiOutlinePencilSquare />
                 </div></button>}
               <div className="">
-                {localStorage.getItem('authorization')&&<p className="w-[30px] h-[30px] bg-slate-600 rounded-full text-white text-center text-[20px] cursor-pointer" onClick={()=>{setLogoutVisible(!logoutVisible)}}>{user.split("")[0]  || 'A'}</p>}
+                {localStorage.getItem('authorization')&&<p className="w-[30px] h-[30px] bg-slate-600 rounded-full text-white text-center text-[20px] cursor-pointer" onClick={()=>{setLogoutVisible(!logoutVisible)}}>{user.name.split("")[0]  || 'A'}</p>}
                 {logoutVisible && localStorage.getItem('authorization')&&<h3 className="absolute mt-4 border border-slate-500 py-2 px-4 right-6 top-8 rounded-md cursor-pointer text-white" onClick={()=>{
+                  navigate(`/profile/${user.id}`);
+                }}>Profile</h3>}
+                {logoutVisible && localStorage.getItem('authorization')&&<h3 className="absolute mt-16 border border-slate-500 py-2 px-4 right-6 top-8 rounded-md cursor-pointer text-white bg-gradient-to-r from-violet-900 to-neutral-950 hover:bg-gradient-to-r hover:from-neutral-950 hover:to-violet-900" onClick={()=>{
                   localStorage.removeItem('authorization');
                   navigate("/");
                 }}>Logout</h3>}

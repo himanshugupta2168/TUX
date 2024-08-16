@@ -1,8 +1,14 @@
 import { atom } from "recoil";
 interface userDetails{
-    default:string
+    default:{
+        name:string, 
+        id:string
+    }
 }
 export const userDetails= atom({
     key:"userDetails",
-    default:"Anonymous"
+    default:{
+        name:"Anonymous",
+        id:"",
+    }
 })

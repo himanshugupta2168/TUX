@@ -15,9 +15,11 @@ function AuthComponent({ type }: {type:"signup"|"signin"}) {
     email:"",
     password:""
   })
+  const [Loading, setLoading]= useState(false);
   const  setValue= useSetRecoilState(userDetails)
   async function authenticate(){
     try{
+      setLoading(true);
       const url= `${import.meta.env.VITE_URL}auth/${type}`
       // console.log(url);
       let response = await axios.post(url, postInputs);
@@ -25,20 +27,23 @@ function AuthComponent({ type }: {type:"signup"|"signin"}) {
 
       if (data && data.success==true){
         localStorage.setItem("authorization", data.token);
-        setValue(data.name);
+        setValue({
+          id:data.id,
+          name:data.name
+        });
         toast.success(`${type} successful`,{
           position:"top-center"
         })
+        setLoading(false);
         navigate(`/blogs`)
       }else{
         throw new Error("unable to login ");
       }
     }
-    catch(e){
-      toast.error("Invalid Credentials", {
-        position:"top-center"
-      })
-      navigate(`/${type}`)
+    catch(e:any){
+      // console.log(e.response.data.message);
+      toast.error(e.response.data.message)
+      setLoading(false);
     }
   }
   return (
@@ -101,7 +106,7 @@ function AuthComponent({ type }: {type:"signup"|"signin"}) {
                     }}/>
                 </div>
           </div>
-          <button onClick={authenticate} className=" bg-gradient-to-r from-violet-900 to-neutral-950 w-1/2 text-white mt-4 h-12 rounded-md text-lg hover:bg-gradient-to-r hover:from-neutral-900 hover:to-violet-900">{type==="signin"?"Login":"Signup"}</button>
+          <button onClick={authenticate} className=" bg-gradient-to-r from-violet-900 to-neutral-950 w-1/2 text-white mt-4 h-12 rounded-md text-lg hover:bg-gradient-to-r hover:from-neutral-900 hover:to-violet-900">{Loading ? "...." : type === 'signin' ? "Login" : "Signup"}</button>
         </div>
         <div className="hidden lg:block bg-gradient-to-br from-purple-950 to-neutral-950 rounded-md text-white">
           <div className="w-4/5 flex flex-col justify-center mx-auto h-full">

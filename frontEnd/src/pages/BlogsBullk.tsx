@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue} from "recoil";
 import BlogCard from "../components/BlogCard"
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar"
@@ -17,20 +17,24 @@ function BlogsBullk() {
           Authorization:localStorage.getItem('authorization')
         }
       })
-      setuer(response.data.user.name);
+      console.log(response.data.user);
+      setuer(response.data.user);
     }
     catch(e){
+      localStorage.setItem("authorization", "");
+      navigate("/");
       console.error(e);
     }
   }
   const [user, setuer]= useRecoilState(userDetails)
   const {loading,blogs}= useBlogs(); 
   const navigate = useNavigate()
-  const auth:any = useRecoilValue(authState)
-
+  const auth:any= useRecoilValue(authState)
+  // console.log(auth);
   useEffect(()=>{
-    if (user=="Anonymous"){
+    if (user.name=="Anonymous"){
       fetchUser();
+      navigate("/blogs")
     }
     if (!auth()){
       navigate("/")
